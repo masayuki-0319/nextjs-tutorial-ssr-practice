@@ -1,3 +1,5 @@
+import { Event } from '../hooks/dummy-data';
+
 const BASE_URL =
   'https://nextjs-tutorial-ssr-practice-default-rtdb.firebaseio.com/';
 
@@ -10,7 +12,7 @@ export const getAllEvents = async () => {
     const event = {
       id: key,
       ...data[key],
-    };
+    } as Event;
     events.push(event);
   }
 
@@ -23,4 +25,10 @@ export const getFeaturedEvents = async () => {
   const featuredEvents = allEvents.filter((event) => event.isFeatured);
 
   return featuredEvents;
+};
+
+export const getEventById = async (id: string) => {
+  const allEvents = await getAllEvents();
+
+  return allEvents.find((event) => event.id === id);
 };
