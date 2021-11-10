@@ -1,12 +1,15 @@
+import { InferGetStaticPropsType } from 'next';
 import { useRouter } from 'next/dist/client/router';
 import EventList from '../../components/events/event-list';
 import { EventSearch } from '../../components/events/event-search';
 import { getAllEvents } from '../../hooks/dummy-data';
 
-const AllEventsPage = () => {
+type Props = InferGetStaticPropsType<typeof getStaticProps>;
+
+const AllEventsPage = (props: Props) => {
   const router = useRouter();
 
-  const events = getAllEvents();
+  const events = props.events;
 
   const findEventHandler = (year: string, month: string) => {
     const fullPath = `events/${year}/${month}`;
@@ -21,6 +24,17 @@ const AllEventsPage = () => {
       <EventList items={events} />
     </div>
   );
+};
+
+export const getStaticProps = async () => {
+  const events = await getAllEvents();
+
+  return {
+    props: {
+      events: events,
+    },
+    revalidate: 60,
+  };
 };
 
 export default AllEventsPage;
