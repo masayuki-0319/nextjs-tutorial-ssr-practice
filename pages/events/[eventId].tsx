@@ -1,24 +1,27 @@
-import { GetStaticPropsContext, InferGetStaticPropsType } from 'next';
+import { GetStaticPropsContext } from 'next';
 
 import { EventContent } from '../../components/event-detail/event-content';
 import { EventLogistics } from '../../components/event-detail/event-logistics';
 import { EventSummary } from '../../components/event-detail/event-summary';
 import { ErrorAlert } from '../../components/ui/error-alert';
-import { getAllEvents, getEventById } from '../../helpers/api-util';
+import { getEventById, getFeaturedEvents } from '../../helpers/api-util';
 import { Event } from '../../hooks/dummy-data';
 
 type Props = {
-  selectedEvent: Event;
+  params: {
+    selectedEvent: Event;
+  };
 };
 
 const EventDetailPage = (props: Props) => {
-  const event = props.selectedEvent;
+  const event = props.params?.selectedEvent;
+  console.log(props);
 
   if (!event) {
     return (
-      <ErrorAlert>
-        <p>No event found!</p>
-      </ErrorAlert>
+      <div className='center'>
+        <p>Loading...</p>
+      </div>
     );
   }
 
@@ -49,12 +52,13 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
       params: {
         selectedEvent: event,
       },
+      revalidate: 30,
     },
   };
 };
 
 export const getStaticPaths = async () => {
-  const events = await getAllEvents();
+  const events = await getFeaturedEvents();
 
   const paths = events.map((event) => {
     return {
@@ -66,7 +70,7 @@ export const getStaticPaths = async () => {
 
   return {
     paths: paths,
-    fallback: false,
+    fallback: 'blocking',
   };
 };
 
