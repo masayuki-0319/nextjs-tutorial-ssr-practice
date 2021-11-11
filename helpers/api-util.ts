@@ -27,6 +27,26 @@ export const getFeaturedEvents = async () => {
   return featuredEvents;
 };
 
+type DateFilter = {
+  year: number;
+  month: number;
+};
+
+export const getFilteredEvents = async (dateFilter: DateFilter) => {
+  const { year, month } = dateFilter;
+
+  const allEvents = await getAllEvents();
+
+  let filteredEvents = allEvents.filter((event) => {
+    const eventDate = new Date(event.date);
+    return (
+      eventDate.getFullYear() === year && eventDate.getMonth() === month - 1
+    );
+  });
+
+  return filteredEvents;
+};
+
 export const getEventById = async (id: string) => {
   const allEvents = await getAllEvents();
 
