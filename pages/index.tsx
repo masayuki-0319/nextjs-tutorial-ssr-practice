@@ -1,3 +1,5 @@
+import Head from 'next/head';
+
 import EventList from '../components/events/event-list';
 import { getFeaturedEvents } from '../helpers/api-util';
 import { InferGetStaticPropsType } from 'next';
@@ -9,6 +11,10 @@ const HomePage = (props: Props) => {
 
   return (
     <div>
+      <Head>
+        <title>NextJS Events</title>
+        <meta name='description' content='いろいろなイベントが見つかるよ！' />
+      </Head>
       <EventList items={events} />
     </div>
   );

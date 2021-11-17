@@ -1,4 +1,5 @@
 import { GetStaticPropsContext } from 'next';
+import Head from 'next/head';
 
 import { EventContent } from '../../components/event-detail/event-content';
 import { EventLogistics } from '../../components/event-detail/event-logistics';
@@ -20,6 +21,11 @@ const EventDetailPage = (props: Props) => {
   if (!event) {
     return (
       <div className='center'>
+        <Head>
+          <title>No Event | NextJS Events</title>
+          <meta name='description' content='イベントが見つかりません' />
+        </Head>
+
         <p>Loading...</p>
       </div>
     );
@@ -27,6 +33,10 @@ const EventDetailPage = (props: Props) => {
 
   return (
     <>
+      <Head>
+        <title>{event.title} | NextJS Events</title>
+        <meta name='description' content={event.description} />
+      </Head>
       <EventSummary title={event.title} />
       <EventLogistics
         date={event.date}
