@@ -27,7 +27,7 @@ const EventLogistics: VFC<Props> = (props) => {
   return (
     <section className={classes.logistics}>
       <div className={classes.image}>
-        <Image src={image} alt={title} width='50' height='50' />
+        <Image src={image} alt={title} width='300' height='300' />
       </div>
       <ul className={classes.list}>
         <LogisticsItem icon={DateIcon}>

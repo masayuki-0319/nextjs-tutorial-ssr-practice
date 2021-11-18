@@ -29,7 +29,7 @@ const EventItem: VFC<Props> = (props) => {
 
   return (
     <li className={classes.item}>
-      <Image src={image} alt={title} width='50' height='50' />
+      <Image src={image} alt={title} width='250' height='160' />
       <div className={classes.content}>
         <h2 className={classes.summary}>{title}</h2>
         <div className={classes.date}>
